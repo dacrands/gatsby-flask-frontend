@@ -113,7 +113,7 @@ class SecondPage extends React.Component {
       <Layout>       
         <main className="dash">        
           <div className="form__container">
-            <form className="form" onSubmit={this.handleSubmit}>        
+            <form className="form form--post" onSubmit={this.handleSubmit}>        
               <label htmlFor="text">              
               <textarea 
                 placeholder="You write stuff here."
