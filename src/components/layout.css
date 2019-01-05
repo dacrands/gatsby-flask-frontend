@@ -629,6 +629,11 @@ pre tt:after {
 /* ================
       ME
 ================ */
+.navbar a {
+  color: #ddd6ec;
+  text-decoration: none;
+  margin-right: 1rem;
+}
 .dash {
   display: flex;
   /* flex-direction: row; */
@@ -638,6 +643,20 @@ pre tt:after {
   align-items: flex-end;
   color: #f8f6f6;
 }
+
+.box {
+  color: #f8f6f6;
+  max-width: 500px;
+  min-height: 500px;
+  margin: 10rem auto;
+  padding: 0px 1.0875rem 1.45rem;
+}
+
+.box a {
+  color: #C097A0;
+}
+
+
 
 
 .btn {
@@ -723,7 +742,7 @@ pre tt:after {
 
 .post__list li {
   display: block;
-  padding: 1rem 0.45rem;
+  padding: 1rem;
 }
 
 .post__list li:first-of-type {
@@ -778,4 +797,34 @@ pre tt:after {
 
 .form input[type="submit"]:hover {
   box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+.form--login {
+  display: block;
+  margin: 0;
+}
+
+.form--login label {
+  display: block;
+  margin: 1rem 0;
+}
+
+.form--login span {
+  position: absolute;
+  /* transform: translateY(90%); */
+}
+
+.form--login input {
+  background: none;
+  border: none;
+  border-bottom: 1px dotted #dadada;
+}
+
+.form--login input[type="submit"] {
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+.footer a {
+  color: #C097A0;
 }
