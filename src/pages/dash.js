@@ -16,11 +16,23 @@ class SecondPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.scrollRight = this.scrollRight.bind(this);
+    this.scrollLeft = this.scrollLeft.bind(this);
     this.getPosts = this.getPosts.bind(this);
   }
 
   componentDidMount() {
     this.getPosts();
+  }
+
+  scrollRight() {
+    console.log('this')
+    this.refs.postsList.scrollBy(400, 0);
+  }
+
+  scrollLeft() {
+    console.log('this')
+    this.refs.postsList.scrollBy(-400, 0);
   }
 
   getPosts() {
@@ -57,7 +69,7 @@ class SecondPage extends React.Component {
       return 
     })
     .catch(e => {      
-      // navigate(`/err/`)
+      alert("Something went wrong!")
       return 
     })
   }
@@ -97,9 +109,7 @@ class SecondPage extends React.Component {
         <main className="dash">        
           <div className="form__container">
             <form className="form" onSubmit={this.handleSubmit}>        
-              <label htmlFor="text">
-              {/* <h2>Write something cool!</h2> */}
-
+              <label htmlFor="text">              
               <textarea 
                 placeholder="You write stuff here."
                 ref="text" 
@@ -108,7 +118,6 @@ class SecondPage extends React.Component {
                 type="text" 
                 name="text" 
                 id="text" 
-
                 value={this.state.text} onChange={this.handleChange}/>
               </label>
               <br/>
@@ -117,8 +126,12 @@ class SecondPage extends React.Component {
           </div>
 
           <div className="posts">
-          {/* <h2>Showing {this.state.posts.length} posts</h2> */}
-            <ul className="posts__list">
+            <div className="posts__title">
+              <button onClick={this.scrollLeft}>	&#10134;</button>
+              <h2>Showing {this.state.posts.length} posts</h2>
+              <button onClick={this.scrollRight}>		&#10133;</button>
+            </div>          
+            <ul ref="postsList" className="posts__list">
               {this.state.posts.map(post => (                   
                   <li className="post" key={post._id}>                    
                     <ul className="post__list">
