@@ -26,13 +26,19 @@ class SecondPage extends React.Component {
   }
 
   scrollRight() {
-    console.log('this')
-    this.refs.postsList.scrollBy(200, 0);
+    console.log('down')
+    this.refs.postsList.scrollBy({
+      left: 120,
+      behavior: 'smooth'
+    });
   }
 
   scrollLeft() {
     console.log('this')
-    this.refs.postsList.scrollBy(-200, 0);
+    this.refs.postsList.scrollBy({
+      left: -120,
+      behavior: 'smooth'
+    });
   }
 
   getPosts() {
@@ -64,8 +70,7 @@ class SecondPage extends React.Component {
       if (response.status !== 200) {
         throw(response)
       }      
-      this.getPosts()
-      console.log('NICE')
+      this.getPosts()      
       return 
     })
     .catch(e => {      
