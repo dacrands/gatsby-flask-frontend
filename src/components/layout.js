@@ -21,6 +21,7 @@ const Layout = ({ children }) => (
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
           style={{
+            color: `#dadada`,
             margin: `0 auto`,
             maxWidth: 1260,
             padding: `0px 1.0875rem 1.45rem`,
@@ -28,7 +29,7 @@ const Layout = ({ children }) => (
           }}
         >
           {children}
-          <footer>
+          <footer className="footer">
             © 2018, Built with <a href="https://www.gatsbyjs.org">Gatsby</a> 
             {` `}
             But let's be honest, <a href="https://dcrands.com">David Crandall</a>
