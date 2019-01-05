@@ -6,8 +6,8 @@ import Layout from '../components/layout'
 
 const ErrPage = () => (
   <Layout>    
-    <h1>Something went wrongs</h1>
-    <p>Welcome to page 2</p>
+    <h1>Something went wrong!</h1>
+    <p>Are you <Link to="/login">Logged in!</Link></p>
     <Link to="/">Go back to the homepage</Link>
   </Layout>
 )
