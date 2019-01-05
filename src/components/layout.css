@@ -636,6 +636,32 @@ pre tt:after {
   
 }
 
+.btn {
+  /* border: 2px solid #1586a6; */
+  border: none;
+  background: none;
+  color: #1586a6;
+  padding: 0.25rem .5rem;  
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.post .btn {
+  padding: 0.15rem .3rem;  
+  font-size: 14px;
+}
+
+.btn--delete {
+  /* color: #d94250; */
+  color: #f8f6f6;
+  background: #d94250;  
+}
+
+.btn--delete:hover {
+  background: #c02232;
+}
+
 
 .posts {
   /* background: red; */
@@ -646,8 +672,8 @@ pre tt:after {
 }
 
 .posts__list {
-  /* display: flex; */    
-  overflow-y: scroll;
+  display: flex;    
+  overflow-x: scroll;  
   height: 500px;  
   max-width: 500px;  
   margin: 0 auto;
@@ -655,15 +681,17 @@ pre tt:after {
 
 .post {
   display: block;
+  min-width: 400px;
   box-shadow: 0 0 2px rgba(0,0,0,0.4);
   margin: 2rem 1rem;  
   white-space: pre-line;
+  overflow-y: auto;
 }
 
 .post__list {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0;  
 }
 
 .post__list li {
@@ -672,8 +700,19 @@ pre tt:after {
 }
 
 .post__list li:first-of-type {
-  background: rgb(54, 53, 53);  
-  color: #dadada;
+  display: flex;
+  justify-content: space-between;
+}
+
+.post__btn-delete {
+  background: #d94250;
+}
+
+.post__list li:first-of-type {
+  /* background: rgb(54, 53, 53);   */
+  color: #1586a6;
+  /* border-top: 1em solid #1586a6; */
+  border-bottom: 1px dashed rgb(143, 149, 150);
 }
  
 .form__container {
@@ -688,16 +727,18 @@ pre tt:after {
 }
 
 .form textarea {
-  border: 1px dotted #1586a6;
+  border: 1px dashed #84888a;
   border-radius: 4px;
   padding: 0.5rem;
   /* resize: none; */
 }
 
 .form input[type="submit"] {
-  border: 2px solid #1586a6;
-  background: none;
-  color: #1586a6;
+  /* border: 2px solid #1586a6; */
+  border: none;
+  background: #1586a6;
+  /* color: #1586a6; */
+  color: #f8f6f6;
   padding: 0.25rem .5rem;  
   border-radius: 4px;
   font-size: 16px;
@@ -709,6 +750,5 @@ pre tt:after {
 }
 
 .form input[type="submit"]:hover {
-  background: #f8f6f6;
   box-shadow: 0 3px 8px rgba(0,0,0,0.3);
 }
