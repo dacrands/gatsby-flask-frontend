@@ -27,12 +27,12 @@ class SecondPage extends React.Component {
 
   scrollRight() {
     console.log('this')
-    this.refs.postsList.scrollBy(400, 0);
+    this.refs.postsList.scrollBy(200, 0);
   }
 
   scrollLeft() {
     console.log('this')
-    this.refs.postsList.scrollBy(-400, 0);
+    this.refs.postsList.scrollBy(-200, 0);
   }
 
   getPosts() {
