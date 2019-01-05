@@ -764,19 +764,17 @@ pre tt:after {
   /* margin: 3rem 0; */
 }
 
-.form {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
 .form textarea {
   /* border: 1px dashed #26db3e; */
   border-radius: 4px;
   padding: 0.5rem;
   background: rgb(29, 29, 34);
-  color: #fafafa;
-  resize: none;
+  color: #fafafa;  
   overflow-y: auto;
+}
+
+.form--post textarea {
+  resize: none;
 }
 
 .form input[type="submit"] {
@@ -799,31 +797,99 @@ pre tt:after {
   box-shadow: 0 3px 8px rgba(0,0,0,0.3);
 }
 
-.form--login {
+.form {
   display: block;
   margin: 0;
+   
 }
 
-.form--login label {
+.form label {
   display: block;
   margin: 1rem 0;
 }
 
-.form--login span {
-  position: absolute;
-  /* transform: translateY(90%); */
+.form--post label {
+  margin: 0;
 }
 
-.form--login input {
+
+.form input {
   background: none;
   border: none;
   border-bottom: 1px dotted #dadada;
+  color: #fafafa; 
 }
 
-.form--login input[type="submit"] {
+.form input[type="submit"] {
   margin: 0;
   margin-bottom: 2rem;
 }
+
+.header--index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header--index h1 {
+  margin: 0;
+}
+
+.clock {
+  background: rgb(39, 39, 43);
+  /* max-width: 200px; */
+
+  /* text-align: center; */
+  padding: 0.5rem;
+  border-radius: 1em;   
+  display: flex;
+  flex-direction: column;
+}
+
+.clock hr {
+  border: none;
+  height: 1px ;
+  margin: 0;
+  background: #3C3B50;
+}
+
+.clock h2 {
+  margin: 0.5rem;
+  font-weight: normal;
+}
+
+.links__container {
+  margin: 4rem 0;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-gap: 3rem;
+  /* outline: 4px solid red; */
+  justify-content: space-evenly;
+}
+
+.links__link {
+  /* outline: 4px solid red; */
+  display: flex;  
+  justify-content: space-between;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);  
+  margin-bottom: 3rem;
+  background: rgb(39, 39, 43);
+}
+
+.links__link a {
+  display: block;
+}
+
+.links__link h3, 
+.links__link p {
+  margin: 0;
+}
+
+.links__text {
+  margin-right: 2rem;
+}
+
 
 .footer a {
   color: #C097A0;
