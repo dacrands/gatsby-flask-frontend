@@ -638,6 +638,7 @@ pre tt:after {
   display: flex;
   /* flex-direction: row; */
   flex-flow: wrap;
+  align-items: center;
   justify-content: space-between;
   margin: 3rem 0;
   align-items: flex-end;
@@ -683,6 +684,10 @@ pre tt:after {
 
 .btn--delete:hover {
   background: #c02232;
+}
+
+.btn--warning {
+  background: rgb(196, 196, 16);
 }
 
 
@@ -761,6 +766,7 @@ pre tt:after {
 .form__container {
   display: flex;
   justify-content: center;
+  /* align-items: center; */
   /* margin: 3rem 0; */
 }
 
@@ -867,15 +873,6 @@ pre tt:after {
   justify-content: space-evenly;
 }
 
-@media(max-width: 1000px) {
-  .links__container {
-    display: block;
-  }
-  .links__container .form input {
-    max-width: 500px;
-  }
-}
-
 .links__container .form input {
   width: 100%;
 }
@@ -914,4 +911,17 @@ pre tt:after {
 
 .footer a {
   color: #C097A0;
+}
+
+
+@media(max-width: 1000px) {
+  .dash {
+    justify-content: center;
+  }
+  .links__container {
+    display: block;
+  }
+  .links__container .form input {
+    max-width: 500px;
+  }
 }

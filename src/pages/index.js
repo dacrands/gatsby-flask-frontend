@@ -5,15 +5,15 @@ import Layout from '../components/layout'
 import { getUser } from '../utils/auth'
 
 class IndexPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    
+
     this.state = {
       time: "--:-- --",
       date: "--/--/--",
       clockInterval: null,
       title: "",
-      desc: "",      
+      desc: "",
       url: "",
       links: []
     }
@@ -39,117 +39,121 @@ class IndexPage extends React.Component {
   }
 
   getLinks() {
-    fetch('http://localhost:5000/link' , {
-      method: "GET",      
+    fetch('http://localhost:5000/link', {
+      method: "GET",
       credentials: 'include',
     })
-    .then(res => res.json())
-    .then(response => {   
-      console.log(response.links[0])    
-      if (response.status !== 200) {
-        throw(response)
-      }      
-      this.setState({links: response.links})            
-      // console.log(response.links)
-      return 
-    })
-    .catch(e => {      
-      navigate(`/err/`)
-      return 
-    })
-  }
-
-  clock() {
-    let currTime = new Date()
-    this.setState({ time: currTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) })
+      .then(res => res.json())
+      .then(response => {        
+        if (response.status !== 200) {
+          throw (response)
+        }
+        this.setState({ links: response.links })        
+        return
+      })
+      .catch(e => {
+        navigate(`/err/`)
+        return
+      })
   }
 
   handleChange(event) {
     let value = event.target.name;
-    this.setState({[value]: event.target.value});    
+    this.setState({ [value]: event.target.value });
   }
 
   handleSubmit(event) {
-    event.preventDefault();  
+    event.preventDefault();
     const data = new FormData(event.target);
-    fetch('http://localhost:5000/link' , {
+    fetch('http://localhost:5000/link', {
       method: "POST",
       body: data,
       credentials: 'include',
     })
-    .then(res => res.json())
-    .then(response => {      
-      if (response.status !== 200) {
-        throw(response)
-      }                  
-      this.getLinks()
-      this.setState({
-        title: "",
-        desc: "",      
-        url: "",
-      })  
-      return 
-    })
-    .catch(e => {      
-      navigate(`/err/`)
-      return 
-    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status !== 200) {
+          throw (response)
+        }
+        this.getLinks()
+        this.setState({
+          title: "",
+          desc: "",
+          url: "",
+        })
+        return
+      })
+      .catch(e => {
+        navigate(`/err/`)
+        return
+      })
   }
 
-  deleteLink(event) {    
-    fetch(`http://localhost:5000/link/delete/${event.target.value}` , {
-      method: `POST`,      
+  deleteLink(event) {
+    fetch(`http://localhost:5000/link/delete/${event.target.value}`, {
+      method: `POST`,
       credentials: `include`,
     })
-    .then(res => res.json())
-    .then(response => {            
-      if (response.status !== 200) {
-        throw(response)
-      }      
-      this.getLinks()         
-      return 
-    })
-    .catch(e => {      
-      alert("Something went wrong!")
-      return 
-    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status !== 200) {
+          throw (response)
+        }
+        this.getLinks()
+        return
+      })
+      .catch(e => {
+        alert("Something went wrong!")
+        return
+      })
+  }
+
+  clock() {
+    let currTime = new Date()
+    this.setState({ time: currTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) })
   }
 
   render() {
     return (
       <Layout>
         <header className="header--index">
-          <h1>Hello { getUser() }!</h1>
+          <h1>Hello {getUser()}!</h1>
           <section className="clock">
             <h2>{this.state.time}</h2>
-            <hr/>
+            <hr />
             <h2>{this.state.date}</h2>
-          </section>        
-        </header>      
+          </section>
+        </header>
 
         <section className="links__container">
+          {/* ----------        
+              FORM
+          ------------*/}
           <form className="form" onSubmit={this.handleSubmit}>
             <label htmlFor="title">
               Title
-              <br/>
-              <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
+              <br />
+              <input type="text" name="title" value={this.state.title} onChange={this.handleChange} />
             </label>
             <label htmlFor="url">
               Url
-              <br/>
-              <input type="url" name="url" value={this.state.url} onChange={this.handleChange}/>
+              <br />
+              <input type="url" name="url" value={this.state.url} onChange={this.handleChange} />
             </label>
             <label htmlFor="desc">
               Description
-              <br/>
-              <textarea type="text" name="desc" cols="40" rows="3" value={this.state.desc} onChange={this.handleChange}/>
+              <br />
+              <textarea type="text" name="desc" cols="40" rows="3" value={this.state.desc} onChange={this.handleChange} />
             </label>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Submit" />
           </form>
 
+          {/* ----------        
+              LINKS
+          ------------*/}
           <div className="links">
             {this.state.links.map(link => {
-              return <div className="links__link">                              
+              return <div className="links__link">
                 <div className="links__text">
                   <a target="_blank" href={link.url}>
                     <h3>{link.title}</h3>
@@ -158,18 +162,18 @@ class IndexPage extends React.Component {
                     <strong>{link.timestamp}</strong>
                   </p>
                   <p>{link.desc}</p>
-                </div>                          
+                </div>
                 <div>
-                  <button onClick={this.deleteLink} value={link._id} className="btn btn--delete">Delete</button>                      
-                </div> 
+                  <button onClick={this.deleteLink} value={link._id} className="btn btn--delete">Delete</button>
+                </div>
               </div>
             })}
           </div>
-        </section>  
+        </section>
       </Layout>
     )
   }
-}  
+}
 
 
 export default IndexPage

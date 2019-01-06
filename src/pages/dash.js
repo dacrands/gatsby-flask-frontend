@@ -3,40 +3,41 @@ import { navigate } from 'gatsby'
 
 import Layout from '../components/layout'
 
-// import { getUser } from '../utils/auth'
-
 class SecondPage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       text: '',
-      posts: []
+      posts: [],
+      showEdit: false,
+      currPostId: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.deletePost = this.deletePost.bind(this);
-    this.scrollRight = this.scrollRight.bind(this);
-    this.scrollLeft = this.scrollLeft.bind(this);
+    this.editPost = this.deletePost.bind(this);
+    this.cancelEdit = this.cancelEdit.bind(this);
+    this.handleEditSubmit = this.handleEditSubmit.bind(this);
     this.getPosts = this.getPosts.bind(this);
+    this.deletePost = this.deletePost.bind(this);    
+    this.scrollRight = this.scrollRight.bind(this);
+    this.scrollLeft = this.scrollLeft.bind(this);    
   }
 
   componentDidMount() {
     this.getPosts();
   }
 
-  scrollRight() {
-    console.log('down')
+  scrollRight() {    
     this.refs.postsList.scrollBy({
-      left: 120,
+      left: 405,
       behavior: 'smooth'
     });
   }
 
-  scrollLeft() {
-    console.log('this')
+  scrollLeft() {    
     this.refs.postsList.scrollBy({
-      left: -120,
+      left: -405,
       behavior: 'smooth'
     });
   }
@@ -84,12 +85,61 @@ class SecondPage extends React.Component {
     this.setState({[value]: event.target.value});
   }
 
+  // --------
+  //  EDIT
+  // --------
+  editPost(event) {    
+    let postText = this.refs[`body${event.target.value}`].innerHTML
+    this.setState({ 
+      text: postText,
+      showEdit: true,
+      currPostId: event.target.value
+    })
+  }
+
+  cancelEdit() {
+    this.setState({
+      text: '',
+      showEdit: false
+    })
+  }
+
+  handleEditSubmit(event) {
+    event.preventDefault();  
+    const data = new FormData(event.target);
+
+    fetch(`http://localhost:5000/post/edit/${this.state.currPostId}` , {
+      method: `POST`,   
+      body: data,
+      credentials: `include`,
+    })
+    .then(res => res.json())
+    .then(response => {            
+      if (response.status !== 200) {
+        throw(response)
+      }      
+      this.setState({ 
+        text: "",
+        showEdit: false,
+      })
+      this.getPosts()      
+      return 
+    })
+    .catch(e => {      
+      alert("Something went wrong!")
+      return 
+    })
+  }
+
+  // --------
+  //  SUBMIT 
+  // --------
   handleSubmit(event) {
     event.preventDefault();  
     const data = new FormData(event.target);
 
     fetch('http://localhost:5000/post' , {
-      method: "POST",
+      method: 'POST',
       body: data,
       credentials: 'include',
     })
@@ -111,9 +161,12 @@ class SecondPage extends React.Component {
   render() {
     return (
       <Layout>       
-        <main className="dash">        
+        <main className="dash">
+          {/* ----------        
+              FORM
+          ------------*/}
           <div className="form__container">
-            <form className="form form--post" onSubmit={this.handleSubmit}>        
+            <form className="form form--post" onSubmit={!this.state.showEdit ? this.handleSubmit : this.handleEditSubmit}>        
               <label htmlFor="text">              
               <textarea 
                 placeholder="You write stuff here."
@@ -126,10 +179,21 @@ class SecondPage extends React.Component {
                 value={this.state.text} onChange={this.handleChange}/>
               </label>
               <br/>
-              <input type="submit" value="Submit"/>
+              {
+                !this.state.showEdit
+                ? <input type="submit" value="Submit"/>
+                : <div>
+                  <input type="submit" className="warning" value="Submit Edit"/>
+                  {` `}
+                  <button onClick={this.cancelEdit} className="btn btn--warning">Cancel</button>
+                </div>                
+              }                            
             </form>
           </div>
 
+          {/* ----------        
+              POST
+          ------------*/}
           <div className="posts">
             <div className="posts__title">
               <button onClick={this.scrollLeft}>	&#10134;</button>
@@ -141,13 +205,23 @@ class SecondPage extends React.Component {
                   <li className="post" key={post._id}>                    
                     <ul className="post__list">
                       <li>{post.timestamp}                    
-                        <button 
-                          className="btn btn--delete"
-                          value={post._id} 
-                          onClick={this.deletePost}>
-                          Delete</button>
+                        <div className="post__btns">
+                          <button 
+                            className="btn btn--warning"
+                            value={post._id}                           
+                            onClick={this.editPost}>                            
+                            Edit
+                          </button>
+                          {` `}
+                          <button 
+                            className="btn btn--delete"
+                            value={post._id} 
+                            onClick={this.deletePost}>
+                            Delete
+                          </button>
+                        </div>                        
                       </li>
-                      <li>{post.body}</li>
+                      <li ref={`body${post._id}`}>{post.body}</li>
                     </ul>                
                   </li>                            
               ))}
@@ -158,6 +232,5 @@ class SecondPage extends React.Component {
     )
   }
 }  
-
 
 export default SecondPage
