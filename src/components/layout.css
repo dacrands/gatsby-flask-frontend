@@ -861,10 +861,23 @@ pre tt:after {
 .links__container {
   margin: 4rem 0;
   display: grid;
-  grid-template-columns: min-content 1fr;
-  grid-gap: 3rem;
+  grid-template-columns: 500px 1fr;
+  grid-gap: 10%;
   /* outline: 4px solid red; */
   justify-content: space-evenly;
+}
+
+@media(max-width: 1000px) {
+  .links__container {
+    display: block;
+  }
+  .links__container .form input {
+    max-width: 500px;
+  }
+}
+
+.links__container .form input {
+  width: 100%;
 }
 
 .links__link {
@@ -879,15 +892,23 @@ pre tt:after {
 
 .links__link a {
   display: block;
+  color: orange;
 }
 
-.links__link h3, 
-.links__link p {
-  margin: 0;
+.links__link a:hover {
+  color: rgb(226, 151, 10);
 }
+
+.links__link h3 {
+  margin-bottom: 1rem;
+  
+} 
 
 .links__text {
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
+  padding: 1rem;
+  white-space: pre-line;
+  /* line-height: 90%; */
 }
 
 
