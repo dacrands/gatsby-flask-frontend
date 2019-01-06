@@ -22,6 +22,7 @@ class IndexPage extends React.Component {
     this.getLinks = this.getLinks.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.deleteLink = this.deleteLink.bind(this)
   }
 
   componentDidMount() {
@@ -82,10 +83,34 @@ class IndexPage extends React.Component {
         throw(response)
       }                  
       this.getLinks()
+      this.setState({
+        title: "",
+        desc: "",      
+        url: "",
+      })  
       return 
     })
     .catch(e => {      
       navigate(`/err/`)
+      return 
+    })
+  }
+
+  deleteLink(event) {    
+    fetch(`http://localhost:5000/link/delete/${event.target.value}` , {
+      method: `POST`,      
+      credentials: `include`,
+    })
+    .then(res => res.json())
+    .then(response => {            
+      if (response.status !== 200) {
+        throw(response)
+      }      
+      this.getLinks()         
+      return 
+    })
+    .catch(e => {      
+      alert("Something went wrong!")
       return 
     })
   }
@@ -104,20 +129,20 @@ class IndexPage extends React.Component {
 
         <section className="links__container">
           <form className="form" onSubmit={this.handleSubmit}>
-            <label htmlFor="">
+            <label htmlFor="title">
               Title
               <br/>
-              <input type="text" name="title" value={this.state.password} onChange={this.handleChange}/>
+              <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
             </label>
-            <label htmlFor="">
+            <label htmlFor="url">
               Url
               <br/>
-              <input type="url" name="url" value={this.state.password} onChange={this.handleChange}/>
+              <input type="url" name="url" value={this.state.url} onChange={this.handleChange}/>
             </label>
-            <label htmlFor="">
+            <label htmlFor="desc">
               Description
               <br/>
-              <textarea type="text" name="desc" value={this.state.password} onChange={this.handleChange}/>
+              <textarea type="text" name="desc" cols="40" rows="3" value={this.state.desc} onChange={this.handleChange}/>
             </label>
             <input type="submit" value="Submit"/>
           </form>
@@ -129,11 +154,13 @@ class IndexPage extends React.Component {
                   <a target="_blank" href={link.url}>
                     <h3>{link.title}</h3>
                   </a>
-                  <p>{link.timestamp}</p>
-                  <p>{link.title}</p>
+                  <p>
+                    <strong>{link.timestamp}</strong>
+                  </p>
+                  <p>{link.desc}</p>
                 </div>                          
                 <div>
-                  <button className="btn btn--delete">Delete</button>                      
+                  <button onClick={this.deleteLink} value={link._id} className="btn btn--delete">Delete</button>                      
                 </div> 
               </div>
             })}
